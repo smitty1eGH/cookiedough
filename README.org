@@ -1,0 +1,13 @@
+* Cookiedough
+
+A click-enabled CLI for cookiecutter
+
+* Goals
+
+Support a single cookiecutter database of project ingredients and a cookiedough.json for composing a recipe from those ingredients.
+
+Manage the developer dependencies independently of the system site-packages and the virtual environnment dependencies, in ~/.local
+
+Provide a more robust event model, so that the virtual environment can be configured ahead of cookiecutter execution
+
+
