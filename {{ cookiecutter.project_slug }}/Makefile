@@ -23,11 +23,11 @@ eserv:
 ecli:
 	@emacsclient -t --eval '(dired-jump)'
 b:
-	@black $(FILES)
+	@black --config etc/pyproject.toml $(FILES)
 c:
 	@mypy --config-file etc/mypy.ini $(FILES)
 t:
-	@PYTHONPATH=$(DPATH) python -m pytest tests --catpure=no
+	@PYTHONPATH=$(DPATH) python -m pytest -c etc/pytest.ini tests --catpure=no
 tidy: b c t
 	echo "tidy"
 ddb:
