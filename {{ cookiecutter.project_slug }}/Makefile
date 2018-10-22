@@ -1,7 +1,8 @@
-.PHONY: help eserv ecli b c t tidy
+.PHONY: help eserv ecli b c t tidy ddb
 .DEFAULT_GOAL := help
 
 FILES=`find . -type f -name *.py`
+DPATH=~/.local/lib/python3.7/site-packages
 
 help:
 	@echo ""
@@ -15,6 +16,7 @@ help:
 	@echo "c          check typing with mypy"
 	@echo "t          run tests quickly with the default Python"
 	@echo "tidy       fix style, type check, and test"
+	@echo "ddb        start dynamodb service"
 	@echo ""
 eserv:
 	@find ~/.emacs.d -type f -name ".elc" -delete && emacs --daemon && echo "\n" && emacsclient -t --eval '(dired-jump)'
@@ -25,6 +27,8 @@ b:
 c:
 	@mypy --config-file etc/mypy.ini $(FILES)
 t:
-	@python -m pytest tests --catpure=no
+	@PYTHONPATH=$(DPATH) python -m pytest tests --catpure=no
 tidy: b c t
 	echo "tidy"
+ddb:
+	@java -Djava.library.path=~/bin/DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb

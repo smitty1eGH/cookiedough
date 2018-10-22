@@ -34,6 +34,10 @@ def cc():
         print("building %s" % p)
         CMD="python -m venv %s" % p
         subprocess.run(CMD.split(),env=os.environ)
+        os.chdir(p)
+        CMD="cookiecutter /home/smitty/cookiedough/cookiedough"
+        subprocess.run(CMD.split(),env=os.environ)
+
 
 cli.add_command(dtls)
 cli.add_command(cc)
