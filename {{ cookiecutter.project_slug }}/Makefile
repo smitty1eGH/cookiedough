@@ -2,7 +2,8 @@
 .DEFAULT_GOAL := help
 
 FILES=`find . -type f -name *.py`
-DPATH=~/.local/lib/python3.7/site-packages
+export PATH:=/home/smitty/.local/bin:$(PATH)
+export DPATH:=/home/smitty/.local/lib/python3.7/site-packages
 
 help:
 	@echo ""
@@ -23,11 +24,11 @@ eserv:
 ecli:
 	@emacsclient -t --eval '(dired-jump)'
 b:
-	@black --config etc/pyproject.toml $(FILES)
+	@PYTHONPATH=$(DPATH) black --config etc/pyproject.toml $(FILES)
 c:
-	@mypy --config-file etc/mypy.ini $(FILES)
+	@PYTHONPATH=$(DPATH) mypy --config-file etc/mypy.ini $(FILES)
 t:
-	@PYTHONPATH=$(DPATH) python -m pytest -c etc/pytest.ini tests --catpure=no
+	@PYTHONPATH=$(DPATH) python -m pytest -c etc/pytest.ini tests --capture=no
 tidy: b c t
 	echo "tidy"
 ddb:
